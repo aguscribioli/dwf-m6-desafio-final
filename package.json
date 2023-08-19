@@ -1,0 +1,31 @@
+{
+  "name": "desafio-final",
+  "version": "1.0.0",
+  "repository": "git@github.com:aguscribioli/dwf-m5-desafio-final.git",
+  "author": "Agus Cribioli <aguscribioli@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@vaadin/router": "^1.7.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase": "^10.1.0",
+    "firebase-admin": "^11.10.1",
+    "nanoid": "3.3.4",
+    "node-fetch": "2.6.1",
+    "nodemon": "^3.0.1",
+    "parcel": "^2.9.3",
+    "path": "^0.12.7"
+  },
+  "scripts": {
+    "dev:front": "parcel ./client/index.html",
+    "dev:api": "nodemon --watch './server/index.ts' --exec 'ts-node ./server/index.ts'",
+    "build:front": "parcel build ./client/index.html",
+    "build:api": "tsc ./server/index.ts ./server/index.js",
+    "build": "yarn build:front && yarn build:api",
+    "start": "node ./server/index.js"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}

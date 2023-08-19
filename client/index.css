@@ -1,0 +1,123 @@
+:root {
+  --background-win-style: rgb(108, 180, 108, 50%);
+  --background-tie-style: rgb(192, 192, 192, 50%);
+  --background-lose-style: rgb(220, 91, 73, 50%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Odibee Sans", cursive;
+  background-image: url(./images/background.png);
+}
+
+.root {
+  width: 100%;
+}
+
+.container-sign-up-page,
+.container-welcome-page,
+.container-code-room-page {
+  height: 100vh;
+  margin: auto;
+  display: grid;
+}
+
+.title {
+  color: rgba(0, 144, 72, 1);
+  font-size: 100px;
+  width: 300px;
+  text-align: center;
+  margin: auto;
+}
+@media (min-width: 960px) {
+  .title {
+    font-size: 130px;
+    width: 550px;
+  }
+}
+
+.form,
+.buttons {
+  text-align: center;
+  padding: 30px 0;
+  display: grid;
+  gap: 20px;
+  justify-content: center;
+}
+@media (min-width: 960px) {
+  .form {
+    padding: 25px 0;
+  }
+}
+
+.label {
+  font-family: "Odibee Sans", cursive;
+  font-size: 30px;
+  text-align: center;
+  display: grid;
+  flex-direction: column;
+}
+
+.input {
+  display: block;
+  padding: 10px 0 20px;
+  border: 10px solid #001997;
+  border-radius: 10px;
+  font-family: "Odibee Sans", cursive;
+  font-size: 45px;
+  padding: 15px;
+  text-align: center;
+  cursor: text;
+  width: 100%;
+  max-width: 285px;
+}
+
+.button {
+  background-color: #006cfc;
+  color: rgba(216, 252, 252, 1);
+  border: 10px solid #001997;
+  border-radius: 10px;
+  font-family: "Odibee Sans", cursive;
+  font-size: 45px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  max-width: 285px;
+}
+
+.container-jugadas {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  justify-content: center;
+  align-content: end;
+  gap: 20px;
+}
+
+.text-instructions {
+  font-family: American Typewriter;
+  color: rgba(0, 0, 0, 1);
+  font-size: 40px;
+  width: auto;
+  max-width: 350px;
+  text-align: center;
+  margin: auto;
+  padding: 40px 20px;
+}
+@media (min-width: 960px) {
+  .text-instructions {
+    font-size: 55px;
+    max-width: 700px;
+    padding: 40px 0;
+  }
+}
+.code-id {
+  font-size: 55px;
+  border-top: 3px solid;
+  border-bottom: 3px solid;
+  border-radius: 15px;
+}
