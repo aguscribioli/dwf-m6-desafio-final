@@ -1,5 +1,3 @@
-import "../../components/button/button"
-import "../../components/input/input"
 import "../../components/option-to-choose/option-to-choose"
 
 export function initExistingRoomPage(params) {

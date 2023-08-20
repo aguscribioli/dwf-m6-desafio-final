@@ -20,7 +20,8 @@ body {
 
 .container-sign-up-page,
 .container-welcome-page,
-.container-code-room-page {
+.container-code-room-page,
+.container-instructions-page {
   height: 100vh;
   margin: auto;
   display: grid;
@@ -108,6 +109,7 @@ body {
   margin: auto;
   padding: 40px 20px;
 }
+
 @media (min-width: 960px) {
   .text-instructions {
     font-size: 55px;
@@ -115,9 +117,51 @@ body {
     padding: 40px 0;
   }
 }
+
 .code-id {
   font-size: 55px;
   border-top: 3px solid;
   border-bottom: 3px solid;
   border-radius: 15px;
+}
+
+.text-instructions-page {
+  font-family: American Typewriter;
+  color: rgba(0, 0, 0, 1);
+  font-size: 40px;
+  width: auto;
+  max-width: 500px;
+  text-align: center;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+@media (min-width: 960px) {
+  .text-instructions-page {
+    font-size: 55px;
+    max-width: 700px;
+    padding: 40px 0;
+  }
+}
+
+.container-button-instructions {
+  height: auto;
+  text-align: center;
+}
+
+.room-id {
+  display: grid;
+  justify-content: flex-end;
+  padding: 30px;
+  font-size: 30px;
+}
+
+.room-id-sala,
+.room-id-number {
+  text-align: right;
+  margin: 0;
+}
+
+.room-id-sala {
+  font-weight: bold;
 }

@@ -7,8 +7,8 @@ router.setRoutes([
   { path: "/welcome", component: "welcome-page" },
   { path: "/code-room", component: "code-room-page" },
   { path: "/enter-room", component: "enter-existing-room-page" },
-  // { path: "/countdown", component: "countdown-page" },
-  // { path: "/preview", component: "preview-page" },
-  // { path: "/result", component: "result-page" },
-  // { path: "(.*)", redirect: "/" },
+  { path: "/instructions", component: "instructions-page" },
+  { path: "/play", component: "play-page" },
+  { path: "/result", component: "result-page" },
+  { path: "(.*)", redirect: "/" },
 ]);

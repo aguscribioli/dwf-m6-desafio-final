@@ -29,6 +29,7 @@ class Welcome extends HTMLElement {
             Router.go("/code-room");
         });
     }
+    // HACER ESTA PARTE Y EMPEZAR POR LA PANTALLA /PLAY
     displayForm() {
         state.subscribe(() => {
             Router.go("/enter-room");

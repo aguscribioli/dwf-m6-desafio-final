@@ -21,7 +21,7 @@ class CodeRoom extends HTMLElement {
         this.innerHTML = `
             <div class='container-code-room-page'>
                 <h4 class="text-instructions">
-                Compartí el código:
+                Compartí el código
                 <br><br><div class='code-id'>${state.getPublicId()}</div><br>
                 con tu contrincante
                 </h4>
