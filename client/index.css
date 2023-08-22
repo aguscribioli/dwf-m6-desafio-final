@@ -143,6 +143,9 @@ body {
     padding: 40px 0;
   }
 }
+.container-instructions-content {
+  display: grid;
+}
 
 .container-button-instructions {
   height: auto;
@@ -164,4 +167,23 @@ body {
 
 .room-id-sala {
   font-weight: bold;
+}
+
+.input-title {
+  font-family: "Odibee Sans", cursive;
+  font-size: 30px;
+  text-align: center;
+}
+
+.existing-room-form {
+  display: none;
+  max-width: 285px;
+}
+
+.button-existing-room-form {
+  margin-top: 20px;
+}
+
+.back {
+  margin: 0 auto;
 }

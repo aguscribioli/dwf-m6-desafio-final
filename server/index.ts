@@ -113,10 +113,12 @@ app.get('/rooms/:roomId', (req, res) => {
   const { userDni } = req.query;
   const { roomId } = req.params;
   
-  usersCollection.doc(userId.toString()).get().then(doc => {
+  usersCollection.doc(userId!.toString()).get().then(doc => {
     if (doc.exists) {
       roomsCollection.doc(roomId).get().then(snap => {
         const data = snap.data();
+        console.log(data);
+        
         
         if (data) {
           let rtdbRoomRef = rtdb.ref('rooms/' + data.rtdbRoomId);

@@ -12,6 +12,8 @@ class CodeRoom extends HTMLElement {
     }
     listenPlayersStatus() {
         state.subscribe(() => {
+            // NO FUNCIONA ESTE IF, OSEA NO VA A LA PANTALLA DE INSTRUCCIONES UNA VEZ QUE
+            // EL PLAYER 2 PUSO EL CODIGO DE LA ROOM
             if (state.playersAreOnline()) {
                 Router.go("/instructions");
             }

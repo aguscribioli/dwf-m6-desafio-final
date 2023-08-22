@@ -14,9 +14,6 @@ class SignUp extends HTMLElement {
         formEl.addEventListener("submit", (event) => {
             event.preventDefault();
             let target = event.target as any;
-
-            console.log(target.dni.value);
-            
             state.signUpUser(target.dni.value);
             state.subscribe(() => {
                 Router.go("/welcome");

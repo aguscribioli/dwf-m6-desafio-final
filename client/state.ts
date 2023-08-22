@@ -389,7 +389,7 @@ const state = {
                 }),
             });
         } else {
-            fetch(API_BASE_URL + '/rooms/reset', {
+            fetch(API_BASE_URL + '/rooms/status', {
                 method: 'patch',
                 headers: {
                     "Content-Type": "application/json",

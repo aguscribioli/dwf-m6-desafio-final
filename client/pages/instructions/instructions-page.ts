@@ -13,7 +13,7 @@ class Instructions extends HTMLElement {
     startGame(buttonEl) {
         buttonEl.addEventListener('click', () => {
             state.updateStartStatus(state.getUserId(), state.getPrivateId());
-            const roomContent = this.querySelector(".text-instructions-page");
+            const roomContent = this.querySelector(".container-instructions-content");
             state.subscribe(() => {
             roomContent!.innerHTML = `
                 <div class='room-id'>
@@ -33,17 +33,19 @@ class Instructions extends HTMLElement {
     render() {
         this.innerHTML = `
             <div class='container-instructions-page'>
-            <h4 class="text-instructions-page">
-                Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos.
-            </h4>
-            <div class='container-button-instructions'>
-                <button class="button start">¡Jugar!</button>
-            </div>
-            <div class="container-jugadas">
-                <my-jugada jugada="piedra"></my-jugada>
-                <my-jugada jugada="papel"></my-jugada>
-                <my-jugada jugada="tijera"></my-jugada>
-            </div>
+                <div class='container-instructions-content'>
+                    <h4 class="text-instructions-page">
+                        Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos.
+                    </h4>
+                    <div class='container-button-instructions'>
+                        <button class="button start">¡Jugar!</button>
+                    </div>
+                </div>
+                <div class="container-jugadas">
+                    <my-jugada jugada="piedra"></my-jugada>
+                    <my-jugada jugada="papel"></my-jugada>
+                    <my-jugada jugada="tijera"></my-jugada>
+                </div>
             </div>
         `;
         this.addListeners();
