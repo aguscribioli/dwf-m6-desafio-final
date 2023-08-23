@@ -57,8 +57,6 @@ class Welcome extends HTMLElement {
                         this.render();
                     });
                 } else if (state.getPublicId()) {
-                    // NO VA A LA PANTALLA DE INSTRUCCIONES UNA VEZ QUE YA LE PUSE
-                    // EL CODIGO DE LA ROOM Y SE ACTUALIZO EN RTDB LOS DATOS DEL PLAYER 2
                     Router.go("/instructions");
                 };
             });

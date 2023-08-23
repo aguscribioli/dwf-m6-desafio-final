@@ -116,7 +116,19 @@ const state = {
     },
     playersAreOnline() {
         const currentState = this.getState();
-        return (currentState.rtdbData.currentGame.playerOne.online && currentState.rtdbData.currentGame.playerTwo.online)
+        if (
+            currentState.rtdbData &&
+            currentState.rtdbData.currentGame &&
+            currentState.rtdbData.currentGame.playerOne &&
+            currentState.rtdbData.currentGame.playerTwo
+        ) {
+            return (
+                currentState.rtdbData.currentGame.playerOne.online &&
+                currentState.rtdbData.currentGame.playerTwo.online
+            )
+        } else {
+            return false;
+        }
     },
     playersAreReadyToPlay() {
         const currentState = this.getState();
@@ -142,7 +154,7 @@ const state = {
         return res;
     },
     resetError() {
-        const currentState = this.getState;
+        const currentState = this.getState();
         currentState.rtdbData.error = false;
         currentState.rtdbData.message = '';
         this.setState(currentState);
@@ -201,9 +213,9 @@ const state = {
     listenRoom() {
         const currentState = this.getState();
         const chatRoomRef = ref(rtdb, '/rooms/' + state.getPrivateId());
-        onValue(chatRoomRef, () => {
-            // const data = snapshot.val();
-            // currentState.rtdbData.currentGame = data.currentGame;
+        onValue(chatRoomRef, (snapshot) => {
+            const data = snapshot.val();
+            currentState.rtdbData.currentGame = data.currentGame;
             console.log('Cambié el state desde "listenRoom()": ', currentState);
             state.setState(currentState);
         });
@@ -317,6 +329,9 @@ const state = {
         });
     },
     signUpUser(dni: string) {
+        if (!dni) {
+            
+        }
         fetch(API_BASE_URL + '/sign-up', {
             method: 'post',
             headers: {

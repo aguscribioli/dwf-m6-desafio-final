@@ -8,12 +8,12 @@ class CodeRoom extends HTMLElement {
     }
     addListeners() {
         this.listenPlayersStatus();
-        state.listenOnlineStatus(state.getUserDni(), state.getPrivateId());
+
+        // VER POR QUE NO SE CAMBIA EL ONLINE CUANDO CIERRO LA VENTANA
+        state.listenOnlineStatus(state.getUserId(), state.getPrivateId());
     }
     listenPlayersStatus() {
         state.subscribe(() => {
-            // NO FUNCIONA ESTE IF, OSEA NO VA A LA PANTALLA DE INSTRUCCIONES UNA VEZ QUE
-            // EL PLAYER 2 PUSO EL CODIGO DE LA ROOM
             if (state.playersAreOnline()) {
                 Router.go("/instructions");
             }
