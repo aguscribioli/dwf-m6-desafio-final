@@ -33,10 +33,10 @@ class Welcome extends HTMLElement {
         const existingRoomButtonEl = this.querySelector('.existing-room');
         const castFormEl = formEl as any;
         const castNewGameButtonEl = newGameButtonEl as any;
-        const castexistingRoomButtonEl = existingRoomButtonEl as any;
+        const castExistingRoomButtonEl = existingRoomButtonEl as any;
         castFormEl.style.display = 'grid';
         castNewGameButtonEl.style.display = 'none';
-        castexistingRoomButtonEl.style.display = 'none';
+        castExistingRoomButtonEl.style.display = 'none';
         castFormEl.addEventListener('submit', (e) => {
             e.preventDefault();
             let roomId = e.target['room-id'].value;
@@ -44,19 +44,19 @@ class Welcome extends HTMLElement {
             state.subscribe(() => {
                 if (state.getError().error) {
                     const container = this.querySelector('.buttons');
-                    container!.innerHTML = `
+                    container.innerHTML = `
                         <h4 class="text-instructions-page">
                             ${state.getError().message}
                         </h4>
-                            <button class="button back">Volver</button>
+                        <button class="button back">Volver</button>
                     `;
                     let backButtonEl = this.querySelector('.back');
-                    const castbackButtonEl = backButtonEl as any;
-                    castbackButtonEl.style.display = 'grid';
-                    castbackButtonEl?.addEventListener('click', () => {
+                    const castBackButtonEl = backButtonEl as any;
+                    castBackButtonEl?.addEventListener('click', () => {
                         this.render();
+                        Router.go("/welcome");
                     });
-                } else if (state.getPublicId()) {
+                } else { 
                     Router.go("/instructions");
                 };
             });

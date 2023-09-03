@@ -12,26 +12,11 @@ const port = 3000;
 const usersCollection = firestore.collection('users');
 const roomsCollection = firestore.collection('rooms');
 
-app.post('/sign-in', (req, res) => {
-  // const dni = req.body.dni;
-  const { dni } = req.body;
-
-  usersCollection.where('dni', '==', dni).get().then((searchResponse) => {
-    if (searchResponse.empty) {
-      usersCollection.add({
-        dni
-      }).then((newUserRef) => {
-        res.json({
-          id: newUserRef.id,
-          new: true,
-        })
-      })
-    } else {
-      res.json({
-        id: searchResponse.docs[0].id,
-      })
-    }
-  })
+app.get('/auth', (req, res) => {
+    res.status(401).json({
+      error: true,
+      message: 'Por favor, creá un usuario.',
+    })
 });
 
 app.post('/sign-up', (req, res) => {
@@ -117,8 +102,6 @@ app.get('/rooms/:roomId', (req, res) => {
     if (doc.exists) {
       roomsCollection.doc(roomId).get().then(snap => {
         const data = snap.data();
-        console.log(data);
-        
         
         if (data) {
           let rtdbRoomRef = rtdb.ref('rooms/' + data.rtdbRoomId);
@@ -150,7 +133,7 @@ app.get('/rooms/:roomId', (req, res) => {
         } else {
           res.status(401).json({
             error: true,
-            message: 'El usuario no existe.',
+            message: 'La sala no existe.',
           });
         }
       });
@@ -254,7 +237,7 @@ app.patch('/rooms/logout', (req, res) => {
 
   usersCollection.doc(userId.toString()).get().then(doc => {
     if (doc.exists) {
-      let data = { player, currentChoice: '', online: false, readyToPlay: false };
+      let data = { player: player, currentChoice: '', online: false, readyToPlay: false };
       let rtdbRoomRef = rtdb.ref('rooms/' + roomId);
 
       rtdbRoomRef.child('currentGame').child(player).update({

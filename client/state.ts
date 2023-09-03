@@ -313,25 +313,23 @@ const state = {
             });
         };
     },
-    signInUser(dni: string) {
-        fetch(API_BASE_URL + '/sign-in', {
-            method: 'post',
+    authUser() {
+        fetch(API_BASE_URL + '/auth', {
+            method: 'get',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                dni,
-            })
         }).then(res => {
             return res.json()
-        }).then(res => {
-            state.setUserData(dni, res.id);
+        }).then(data => {
+            console.log(data);
+            
+            if (data.error) {
+                state.catchError(data);
+            }
         });
     },
     signUpUser(dni: string) {
-        if (!dni) {
-            
-        }
         fetch(API_BASE_URL + '/sign-up', {
             method: 'post',
             headers: {
