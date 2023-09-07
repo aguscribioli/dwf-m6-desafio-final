@@ -214,7 +214,7 @@ const state = {
         const currentState = this.getState();
         const chatRoomRef = ref(rtdb, '/rooms/' + state.getPrivateId());
         onValue(chatRoomRef, (snapshot) => {
-            const data = snapshot.val();
+            let data = snapshot.val();
             currentState.rtdbData.currentGame = data.currentGame;
             console.log('Cambié el state desde "listenRoom()": ', currentState);
             state.setState(currentState);
@@ -347,7 +347,7 @@ const state = {
     updateChoice(userId: string, roomId: string, choice: Jugada) {
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/choice', {
-                method: 'patch',
+                method: 'put',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -360,7 +360,7 @@ const state = {
             });
         } else {
             fetch(API_BASE_URL + '/rooms/choice', {
-                method: 'patch',
+                method: 'put',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -376,7 +376,7 @@ const state = {
     updateHistory(userId: string, roomId: string, result: string) {
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/history', {
-                method: 'patch',
+                method: 'put',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -391,7 +391,7 @@ const state = {
     updateStartStatus(userId: string, roomId: string) {
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/status', {
-                method: 'patch',
+                method: 'put',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -403,7 +403,7 @@ const state = {
             });
         } else {
             fetch(API_BASE_URL + '/rooms/status', {
-                method: 'patch',
+                method: 'put',
                 headers: {
                     "Content-Type": "application/json",
                 },

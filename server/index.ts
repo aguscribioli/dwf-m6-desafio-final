@@ -141,7 +141,7 @@ app.get('/rooms/:roomId', (req, res) => {
   });
 });
 
-app.patch('/rooms/status', (req, res) => {
+app.put('/rooms/status', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { player } = req.body;
@@ -164,7 +164,7 @@ app.patch('/rooms/status', (req, res) => {
   });
 });
 
-app.patch('/rooms/choice', (req, res) => {
+app.put('/rooms/choice', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { player } = req.body;
@@ -188,7 +188,7 @@ app.patch('/rooms/choice', (req, res) => {
   });
 });
 
-app.patch('/rooms/history', (req, res) => {
+app.put('/rooms/history', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { result } = req.body;
