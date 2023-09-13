@@ -12,6 +12,8 @@ class Instructions extends HTMLElement {
     }
     startGame(buttonEl) {
         buttonEl.addEventListener('click', () => {
+            console.log('soy el state: ', state);
+            
             state.updateStartStatus(state.getUserId(), state.getPrivateId());
             const roomContent = this.querySelector(".container-instructions-content");
             state.subscribe(() => {

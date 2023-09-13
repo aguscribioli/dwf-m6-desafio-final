@@ -152,6 +152,7 @@ app.put('/rooms/status', (req, res) => {
       let rtdbRoomRef = rtdb.ref('rooms/' + roomId);
 
       rtdbRoomRef.child('currentGame').child(player).update({
+        // COMPLETAR ACA TODOS LOS CAMPOS QUE HAY, NO SOLAMENTE EL readyToPlay
         readyToPlay: true,
       });
       res.json(data);
@@ -230,7 +231,7 @@ app.put('/rooms/history', (req, res) => {
   });
 });
 
-app.patch('/rooms/logout', (req, res) => {
+app.put('/rooms/logout', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { player } = req.body;

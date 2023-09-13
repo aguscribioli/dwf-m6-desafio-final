@@ -102,7 +102,7 @@ const state = {
     },
     init() {
         let localData;
-        const storageData = localStorage.getItem('currentState');
+        const storageData = localStorage.getItem('actual-state');
         if (storageData) {
             localData = storageData;
             this.setState(JSON.parse(localData!));
@@ -182,14 +182,49 @@ const state = {
         this.setState(currentState);
     },
     setState(newState) {
+        console.log('state al principio', state.data);
+        
         this.data = newState;
         for (const callback of this.listeners) {
             callback();
         }
-        localStorage.setItem('currentState', JSON.stringify(newState));
+        localStorage.setItem('actual-state', JSON.stringify(newState));
+        console.log('state al final', state.data);
     },
     setUserData(dni, userId?) {
-        const currentState = this.getState();
+        const currentState = {
+            userData: {
+                dni: '',
+                userId: '',
+            },
+            rtdbData: {
+                roomPrivateId: '',
+                roomPublicId: '',
+                currentGame: {
+                    playerOne: {
+                        dni: '',
+                        id: '',
+                        online: false,
+                        readyToPlay: false,
+                        currentChoice: '',
+                    },
+                    playerTwo: {
+                        dni: '',
+                        userId: '',
+                        online: false,
+                        readyToPlay: false,
+                        currentChoice: '',
+                    },
+                },
+                historyScore: {
+                    playerOne: 0,
+                    playerTwo: 0,
+                    currentResult: "",
+                }
+            },
+            error: false,
+            message: '',
+        };
         currentState.userData.dni = dni;
         currentState.userData.userId = userId;
         this.setState(currentState);
@@ -212,9 +247,19 @@ const state = {
     },
     listenRoom() {
         const currentState = this.getState();
+        console.log('PrivateID: ', state.getPrivateId());
+        console.log('PublicID: ', state.getPublicId());
+        
         const chatRoomRef = ref(rtdb, '/rooms/' + state.getPrivateId());
         onValue(chatRoomRef, (snapshot) => {
+            console.log('snapshot: ', snapshot);
+            console.log('snapshot.val(): ', snapshot.val());
+            
             let data = snapshot.val();
+            console.log('currentState.rtdbData.currentGame: ', currentState.rtdbData.currentGame);
+            console.log('data: ', data);
+            console.log('data.currentGame: ', data.currentGame);
+            
             currentState.rtdbData.currentGame = data.currentGame;
             console.log('Cambié el state desde "listenRoom()": ', currentState);
             state.setState(currentState);
@@ -250,7 +295,7 @@ const state = {
             if (data.error) {
                 state.catchError(data);
             } else {
-                state.setRtdbData(roomId, data.rtdbRoomId);
+                state.setRtdbData(data.rtdbRoomId, roomId);
                 this.listenRoom();
             }
         });
@@ -259,7 +304,7 @@ const state = {
         window.addEventListener('beforeunload', () => {
             if (state.getUserDni() == state.getPlayerTwoDni()) {
                 fetch(API_BASE_URL + '/rooms/logout', {
-                    method: 'patch',
+                    method: 'put',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -271,7 +316,7 @@ const state = {
                 });
             } else {
                 fetch(API_BASE_URL + '/rooms/logout', {
-                    method: 'patch',
+                    method: 'put',
                     headers: {
                         'Content-Type': 'application/json',
                     },
