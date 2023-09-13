@@ -9,10 +9,12 @@ class Instructions extends HTMLElement {
     addListeners() {
         const startButtonEl = this.querySelector('.start');
         this.startGame(startButtonEl);
+        state.listenOnlineStatus(state.getUserId(), state.getPrivateId());
     }
     startGame(buttonEl) {
         buttonEl.addEventListener('click', () => {
             console.log('soy el state: ', state);
+
             
             state.updateStartStatus(state.getUserId(), state.getPrivateId());
             const roomContent = this.querySelector(".container-instructions-content");
