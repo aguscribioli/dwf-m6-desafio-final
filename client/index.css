@@ -21,8 +21,9 @@ body {
 .container-sign-up-page,
 .container-welcome-page,
 .container-code-room-page,
-.container-instructions-page {
-  height: 100vh;
+.container-instructions-page,
+.container-play-page {
+  height: 100%;
   margin: auto;
   display: grid;
 }

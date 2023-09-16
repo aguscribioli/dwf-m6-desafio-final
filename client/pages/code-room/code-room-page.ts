@@ -8,8 +8,6 @@ class CodeRoom extends HTMLElement {
     }
     addListeners() {
         this.listenPlayersStatus();
-
-        // VER POR QUE NO SE CAMBIA EL ONLINE CUANDO CIERRO LA VENTANA
         state.listenOnlineStatus(state.getUserId(), state.getPrivateId());
     }
     listenPlayersStatus() {

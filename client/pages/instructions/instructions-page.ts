@@ -13,9 +13,6 @@ class Instructions extends HTMLElement {
     }
     startGame(buttonEl) {
         buttonEl.addEventListener('click', () => {
-            console.log('soy el state: ', state);
-
-            
             state.updateStartStatus(state.getUserId(), state.getPrivateId());
             const roomContent = this.querySelector(".container-instructions-content");
             state.subscribe(() => {
@@ -27,11 +24,16 @@ class Instructions extends HTMLElement {
                 <h4 class="text-instructions-page">
                     Esperando a que la otra persona presione <i>¡Jugar!</i>...
                 </h4>
-            `})
-    
+            `
+        
             if (state.playersAreReadyToPlay()) {
+                console.log('Ambos jugadores están readyToPlay. Redirigiendo a /play');
                 Router.go("/play");
+            } else {
+                console.log('Los jugadores aún no están readyToPlay.');
+                
             }
+            })
         });
     }
     render() {

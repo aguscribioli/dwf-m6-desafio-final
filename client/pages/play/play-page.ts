@@ -32,19 +32,19 @@ class Play extends HTMLElement {
     }
     render() {
         this.innerHTML = `
-            <div class='container-instructions-page'>
-            <h4 class="text-instructions-page">
-                Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos.
-            </h4>
-            <div class='container-button-instructions'>
-                <button class="button start">¡Jugar!</button>
+        <div class='container-play-page'>
+            <div class="container-jugadas-player-two">
+                <my-jugada jugada="tijera" class="player-two-play-tijera"></my-jugada>
+                <my-jugada jugada="papel" class="player-two-play-papel"></my-jugada>
+                <my-jugada jugada="piedra" class="player-two-play-piedra"></my-jugada>
             </div>
-            <div class="container-jugadas">
-                <my-jugada jugada="piedra"></my-jugada>
-                <my-jugada jugada="papel"></my-jugada>
-                <my-jugada jugada="tijera"></my-jugada>
+            <my-timer class="container-timer"></my-timer>
+            <div class="container-jugadas-player-one">
+                <my-jugada jugada="piedra" class="player-one-play-piedra"></my-jugada>
+                <my-jugada jugada="papel" class="player-one-play-papel"></my-jugada>
+                <my-jugada jugada="tijera" class="player-one-play-tijera"></my-jugada>
             </div>
-            </div>
+        </div>
         `;
         this.addListeners();
     }

@@ -132,7 +132,11 @@ const state = {
     },
     playersAreReadyToPlay() {
         const currentState = this.getState();
-        return (currentState.rtdbData.currentGame.playerOne.readyToPlay && currentState.rtdbData.currentGame.playerTwo.readyToPlay)
+        const playerOneReady = currentState.rtdbData.currentGame.playerOne.readyToPlay;
+        const playerTwoReady = currentState.rtdbData.currentGame.playerTwo.readyToPlay;
+        console.log('playerOneReady: ', playerOneReady);
+        console.log('playerTwoReady: ', playerTwoReady);
+        return (playerOneReady && playerTwoReady);
     },
     playersChoseMove() {
         const currentState = this.getState();
@@ -247,19 +251,9 @@ const state = {
     },
     listenRoom() {
         const currentState = this.getState();
-        console.log('PrivateID: ', state.getPrivateId());
-        console.log('PublicID: ', state.getPublicId());
-        
         const chatRoomRef = ref(rtdb, '/rooms/' + state.getPrivateId());
         onValue(chatRoomRef, (snapshot) => {
-            console.log('snapshot: ', snapshot);
-            console.log('snapshot.val(): ', snapshot.val());
-            
             let data = snapshot.val();
-            console.log('currentState.rtdbData.currentGame: ', currentState.rtdbData.currentGame);
-            console.log('data: ', data);
-            console.log('data.currentGame: ', data.currentGame);
-            
             currentState.rtdbData.currentGame = data.currentGame;
             console.log('Cambié el state desde "listenRoom()": ', currentState);
             state.setState(currentState);
