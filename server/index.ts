@@ -57,18 +57,18 @@ app.post('/rooms', (req, res) => {
             id: userId,
             online: true,
             readyToPlay: false,
-            currentChoice: '',
+            currentChoice: ' ',
           },
           playerTwo: {
             dni: '',
             id: '',
             online: false,
             readyToPlay: false,
-            currentChoice: '',
+            currentChoice: ' ',
           },
-          currentResult: "",
         },
         historyScore: {
+          result: '',
           playerOne: 0,
           playerTwo: 0,
         }
@@ -114,12 +114,14 @@ app.get('/rooms/:roomId', (req, res) => {
               if (userDni == roomData.currentGame.playerOne.dni) {
                 rtdbRoomRef.child('currentGame').child('playerOne').update({
                   online: true,
+                  currentChoice: '',
                 });
               } else {
                 rtdbRoomRef.child('currentGame').child('playerTwo').update({
                   dni: userDni,
                   id: userId,
                   online: true,
+                  currentChoice: '',
                 });
               }
               res.json(data);
@@ -141,7 +143,7 @@ app.get('/rooms/:roomId', (req, res) => {
   });
 });
 
-app.put('/rooms/status', (req, res) => {
+app.patch('/rooms/status', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { player } = req.body;
@@ -152,8 +154,8 @@ app.put('/rooms/status', (req, res) => {
       let rtdbRoomRef = rtdb.ref('rooms/' + roomId);
 
       rtdbRoomRef.child('currentGame').child(player).update({
-        // COMPLETAR ACA TODOS LOS CAMPOS QUE HAY, NO SOLAMENTE EL readyToPlay
         readyToPlay: true,
+        currentChoice: '',
       });
       res.json(data);
     } else {
@@ -165,7 +167,7 @@ app.put('/rooms/status', (req, res) => {
   });
 });
 
-app.put('/rooms/choice', (req, res) => {
+app.patch('/rooms/choice', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { player } = req.body;
@@ -173,11 +175,11 @@ app.put('/rooms/choice', (req, res) => {
 
   usersCollection.doc(userId.toString()).get().then(doc => {
     if (doc.exists) {
-      let data = { player, choice };
+      let data = { player: player, choice: choice };
       let rtdbRoomRef = rtdb.ref('rooms/' + roomId);
 
       rtdbRoomRef.child('currentGame').child(player).update({
-        choice,
+        currentChoice: choice,
       });
       res.json(data);
     } else {
@@ -189,7 +191,7 @@ app.put('/rooms/choice', (req, res) => {
   });
 });
 
-app.put('/rooms/history', (req, res) => {
+app.patch('/rooms/history', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { result } = req.body;
@@ -201,6 +203,8 @@ app.put('/rooms/history', (req, res) => {
 
       rtdbRoomRef.get().then(snap => {
         if (snap.exists) {
+          console.log('snap.val().historyScore: ', snap.val().historyScore);
+          
           currentHistory = snap.val().historyScore;
 
           if (result == 'playerOne') {
@@ -231,7 +235,7 @@ app.put('/rooms/history', (req, res) => {
   });
 });
 
-app.put('/rooms/logout', (req, res) => {
+app.patch('/rooms/logout', (req, res) => {
   const { userId } = req.body;
   const { roomId } = req.body;
   const { player } = req.body;
@@ -244,7 +248,7 @@ app.put('/rooms/logout', (req, res) => {
       rtdbRoomRef.child('currentGame').child(player).update({
         online: false,
         readyToPlay: false,
-        currentChoice: '',
+        currentChoice: ' ',
       });
       res.json(data);
     } else {
@@ -268,7 +272,7 @@ app.patch('/rooms/reset', (req, res) => {
 
       rtdbRoomRef.child('currentGame').child(player).update({
         readyToPlay: false,
-        currentChoice: '',
+        currentChoice: ' ',
       });
       rtdbRoomRef.child('historyScore').update({
         currentResult: '',

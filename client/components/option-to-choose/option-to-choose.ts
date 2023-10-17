@@ -8,7 +8,7 @@ customElements.define(
     render(){
       const shadow = this.attachShadow({ mode: "open" });
       const div = document.createElement("div");
-      const jugada = this.getAttribute("jugada");
+      const jugada = this.getAttribute("data-jugada");
       const style = document.createElement("style");
       const image = document.createElement("img");
       image.setAttribute("width", "90px");

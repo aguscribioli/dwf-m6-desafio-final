@@ -77,9 +77,9 @@ class Welcome extends HTMLElement {
                     </form>
                 </div>
                 <div class="container-jugadas">
-                    <my-jugada jugada="piedra"></my-jugada>
-                    <my-jugada jugada="papel"></my-jugada>
-                    <my-jugada jugada="tijera"></my-jugada>
+                    <my-jugada data-jugada="piedra"></my-jugada>
+                    <my-jugada data-jugada="papel"></my-jugada>
+                    <my-jugada data-jugada="tijera"></my-jugada>
                 </div>
             </div>
         `;

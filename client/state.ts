@@ -28,20 +28,20 @@ const state = {
                     id: '',
                     online: false,
                     readyToPlay: false,
-                    currentChoice: '',
+                    currentChoice: ' ',
                 },
                 playerTwo: {
                     dni: '',
                     userId: '',
                     online: false,
                     readyToPlay: false,
-                    currentChoice: '',
+                    currentChoice: ' ',
                 },
             },
             historyScore: {
                 playerOne: 0,
                 playerTwo: 0,
-                currentResult: "",
+                result: " ",
             }
         },
         error: false,
@@ -143,8 +143,8 @@ const state = {
         let playerOneMove: Jugada = currentState.rtdbData.currentGame.playerOne.currentChoice;
         let playerTwoMove: Jugada = currentState.rtdbData.currentGame.playerTwo.currentChoice;
         let res: Boolean = (
-            playerOneMove == 'piedra' || playerOneMove == 'papel' || playerOneMove == 'tijera' &&
-            playerTwoMove == 'piedra' || playerTwoMove == 'papel' || playerTwoMove == 'tijera'
+            playerOneMove == 'piedra' || playerOneMove == 'papel' || playerOneMove == 'tijera') &&
+            (playerTwoMove == 'piedra' || playerTwoMove == 'papel' || playerTwoMove == 'tijera'
         );
         return res;
     },
@@ -186,14 +186,11 @@ const state = {
         this.setState(currentState);
     },
     setState(newState) {
-        console.log('state al principio', state.data);
-        
         this.data = newState;
         for (const callback of this.listeners) {
             callback();
         }
         localStorage.setItem('actual-state', JSON.stringify(newState));
-        console.log('state al final', state.data);
     },
     setUserData(dni, userId?) {
         const currentState = {
@@ -326,7 +323,7 @@ const state = {
     resetFlags(userId: string, roomId: string) {
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/reset', {
-                method: 'patch',
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -334,12 +331,12 @@ const state = {
                     userId,
                     roomId,
                     player: 'playerTwo',
-                    currentChoice: '',
+                    currentChoice: ' ',
                 }),
             });
         } else {
             fetch(API_BASE_URL + '/rooms/reset', {
-                method: 'patch',
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -347,7 +344,7 @@ const state = {
                     userId,
                     roomId,
                     player: 'playerOne',
-                    currentChoice: '',
+                    currentChoice: ' ',
                 }),
             });
         };
@@ -384,9 +381,11 @@ const state = {
         });
     },
     updateChoice(userId: string, roomId: string, choice: Jugada) {
+        console.log('state.getState(): ', state.getState());
+        
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/choice', {
-                method: 'put',
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -394,12 +393,12 @@ const state = {
                     userId,
                     roomId,
                     player: 'playerTwo',
-                    currentChoice: choice,
+                    choice,
                 }),
             });
         } else {
             fetch(API_BASE_URL + '/rooms/choice', {
-                method: 'put',
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -407,7 +406,7 @@ const state = {
                     userId,
                     roomId,
                     player: 'playerOne',
-                    currentChoice: choice,
+                    choice,
                 }),
             });
         }
@@ -415,14 +414,14 @@ const state = {
     updateHistory(userId: string, roomId: string, result: string) {
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/history', {
-                method: 'put',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     userId,
                     roomId,
-                    currentResult: result,
+                    result,
                 }),
             });
         }
@@ -430,7 +429,7 @@ const state = {
     updateStartStatus(userId: string, roomId: string) {
         if (state.getUserDni() == state.getPlayerTwoDni()) {
             fetch(API_BASE_URL + '/rooms/status', {
-                method: 'put',
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -442,7 +441,7 @@ const state = {
             });
         } else {
             fetch(API_BASE_URL + '/rooms/status', {
-                method: 'put',
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",
                 },

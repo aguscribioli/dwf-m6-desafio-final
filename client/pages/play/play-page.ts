@@ -6,47 +6,55 @@ class Play extends HTMLElement {
     connectedCallback() {
         this.render();
     }
-    addListeners() {
-        const startButtonEl = this.querySelector('.start');
-        this.startGame(startButtonEl);
-    }
-    startGame(buttonEl) {
-        buttonEl.addEventListener('click', () => {
-            state.updateStartStatus(state.getUserId(), state.getPrivateId());
-            const roomContent = this.querySelector(".text-instructions-page");
-            state.subscribe(() => {
-            roomContent!.innerHTML = `
-                <div class='room-id'>
-                    <p class='room-id-sala'>Sala</p>
-                    <p class='room-id-number'>${state.getPublicId()}</p>
-                </div>
-                <h4 class="text-instructions-page">
-                    Esperando a que la otra persona presione <i>¡Jugar!</i>...
-                </h4>
-            `})
-    
-            if (state.playersAreReadyToPlay()) {
-                Router.go("/play");
+    addListeners(counter) {
+        let countdown = this.querySelector('.container-timer');
+        let hands = this.querySelectorAll('.hands');
+        function initCountdown() {
+            const intervalId = setInterval(() => {
+                counter--;
+                countdown.innerHTML = `
+                <my-timer class="container-timer">${counter}</my-timer>
+                `;
+                if (counter == 0) {
+                    clearInterval(intervalId);
+                    // state.resetFlags(state.getUserId(), state.getPrivateId());
+                }
+                if (state.playersChoseMove()) {
+                    clearInterval(intervalId);
+                }
+            }, 1000);
+            for (const h of hands) {
+                h.addEventListener('click', (e) => {
+                    const playerHand = e.target as any;
+
+                    state.updateChoice(state.getUserId(), state.getPrivateId(), playerHand.dataset.jugada);
+                    hands.forEach(element => {
+                        element.classList.add('disabled');
+                        playerHand.classList.add('target');
+                    });
+                });
             }
-        });
+        }
+        state.subscribe(() => {
+            if (state.playersChoseMove()) {
+                Router.go('/picks')
+            }
+        })
+        initCountdown();
     }
     render() {
+        let counter: number = 4;
         this.innerHTML = `
         <div class='container-play-page'>
-            <div class="container-jugadas-player-two">
-                <my-jugada jugada="tijera" class="player-two-play-tijera"></my-jugada>
-                <my-jugada jugada="papel" class="player-two-play-papel"></my-jugada>
-                <my-jugada jugada="piedra" class="player-two-play-piedra"></my-jugada>
-            </div>
-            <my-timer class="container-timer"></my-timer>
+            <my-timer class="container-timer">${counter}</my-timer>
             <div class="container-jugadas-player-one">
-                <my-jugada jugada="piedra" class="player-one-play-piedra"></my-jugada>
-                <my-jugada jugada="papel" class="player-one-play-papel"></my-jugada>
-                <my-jugada jugada="tijera" class="player-one-play-tijera"></my-jugada>
+                <my-jugada data-jugada="piedra" class="player-one-play-piedra hands"></my-jugada>
+                <my-jugada data-jugada="papel" class="player-one-play-papel hands"></my-jugada>
+                <my-jugada data-jugada="tijera" class="player-one-play-tijera hands"></my-jugada>
             </div>
         </div>
         `;
-        this.addListeners();
+        this.addListeners(counter);
     }
 }
 
